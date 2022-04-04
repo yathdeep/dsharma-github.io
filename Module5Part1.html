@@ -1,0 +1,99 @@
+<html>
+
+<!--
+DATA 608
+Deepak sharma
+Module 5 - Part 1    
+-->
+
+<head><title>Module 5 - Part 1</title></head>
+<body>
+
+<h1>Module 5 - Part 1</h1>
+<h2>DATA608 - Deepak sharma</h2>
+
+
+<script type="text/javascript">
+
+
+// Function 1: reverseString - simple function that reverses string contents.
+function reverseString(){
+	var strinput1 = document.getElementById("strinput1").value;
+	
+	// Check if string is empty. If empty, put error message and return safely.
+	if (strinput1.length == 0) {
+		alert("The input string is empty.");
+		return;
+	}
+	
+	var stroutput1 = "";
+	
+	// Clear contents of DIV innerHTML.
+	document.getElementById("target1").innerHTML = "";
+	
+	// Algorithm to reverse the string contents.
+	for (i = strinput1.length-1; i > -1; i--) {
+		var charval = strinput1.charAt(i);
+		stroutput1 += charval;
+	}
+	
+	// Place formatted string output to div innerHTML.
+	var strcand = "Reverse string is: <b>" + stroutput1 + "</b>";
+	document.getElementById("target1").innerHTML = strcand;
+}
+
+// Function 2: calcMultiples - simple function that calculates the first 20 multiples of a given input number and outputs to screen.
+function calcMultiples(){
+	var numinput = document.getElementById("num").value;
+
+	// Check if numinput is empty. If empty, put error message and return safely.
+	if (numinput.length == 0) {
+		alert("The input number is empty.");
+		return;
+	}
+	
+	// Clear contents of DIV innerHTML.
+	document.getElementById("target2").innerHTML = "";
+	
+	// Create a table with border and 5 rows of 4 columns containing a successive multiple of the input number in each column.
+	var stroutput = "<table border=1>";
+	var ival = numinput;
+	var breakline = false;
+	for (i = 1; i < 21; i++) {
+		// if the iteration lands at the beginning of the row, create a tr element.
+		if (i == 1 || i == 5 || i == 9 || i == 13 || i == 17) {
+			stroutput += "<tr>";
+		}
+		
+		// output the current multiple of the input number.
+		ival = (i*numinput);
+		stroutput += "<td>" + ival + "</td>";
+		
+		// if the iteration lands at the end of the row, create an ending tr element.
+		if (i == 4 || i == 8 || i == 12 || i == 16 || i == 20)
+			stroutput += "</tr>";
+	}
+	stroutput += "</table>";
+	document.getElementById("target2").innerHTML = stroutput;
+}
+</script>
+<p>
+
+<form>
+	<h3>Question 1</h3>
+    <input id="strinput1" type="text" size="40">
+    <input type="button" value="Reverse String" onClick="reverseString();"></br>
+	<div id="target1"></div>
+</form>
+<form>
+	<h3>Question 2</h3>
+    <input id="num" type="number" size="4">
+    <input type="button" value="Calculate Multiples" onClick="calcMultiples();"></br>
+	<div id="target2"></div>
+</form>
+
+</p>
+
+
+</body>
+</html>
