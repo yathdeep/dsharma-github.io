@@ -1,0 +1,121 @@
+<html>
+
+<!--
+DATA 608
+Deepak sharma
+Module 5 - Part 2  
+Reference(s)
+[DAT] Data Loading in D3. Retrieved from website: https://www.tutorialsteacher.com/d3js/loading-data-from-file-in-d3js
+[HOW] How To Create a Two Column Layout. Retrieved from website: https://www.w3schools.com/howto/howto_css_two_columns.asp
+[HOW2] How to populate the options of a select element in javascript. Retrieved from website: https://stackoverflow.com/questions/6601028/how-to-populate-the-options-of-a-select-element-in-javascript    
+[HTM] HTML Select Tag. Retrieved from website: https://www.w3schools.com/tags/tag_select.asp
+-->
+
+<head><title>Module 5 - Part 2</title>
+<style>
+/* Ref: [HOW] */
+* {
+  box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.lstPresidents {
+  width: 200px;
+}
+</style>
+
+</head>
+<body>
+
+<h1>Module 5 - Part 2</h1>
+<h2>DATA608 - Deepak Sharma</h2>
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.7.4/d3.min.js"></script>
+<script type="text/javascript">
+
+// Retrieve data from CSV file using d3.csv function. Ref: [DAT]
+var presArray;
+d3.csv("https://raw.githubusercontent.com/yathdeep/data608-msds/main/presidents.csv",function(data) {
+	presArray = data;
+	
+	// Populate select tag selPresidents. Ref: [HOW2]
+	var selPresidents = document.getElementById("selPresidents");
+	for (i = 0; i < presArray.length; i++) {
+		var opt = document.createElement("option");
+		opt.value = presArray[i].Name;
+		opt.label = presArray[i].Name;
+		
+		opt.innerHTML = presArray[i].Name;
+
+		selPresidents.appendChild(opt);	
+	}
+});
+
+
+// Function 1: loadData - loads data from CSV file and makes an HTML Table.
+function loadData() {
+	var strHTML = "<table border=1>";
+	strHTML += "<tr><th>President</th><th>Height</th><th>Weight</th></tr>";
+	for (i = 0; i < presArray.length; i++) {
+		strHTML += "<tr>";
+		strHTML += "<td>" + presArray[i].Name +"</td>";
+		strHTML += "<td>" + presArray[i].Height +"</td>";
+		strHTML += "<td>" + presArray[i].Weight +"</td>";
+		strHTML += "</tr>";
+	}
+	strHTML += "</table>";
+	document.getElementById("target1").innerHTML = strHTML;
+}
+
+// Function 2: getInfo - retrieves height and weight information based on President selected.
+function getInfo() {
+	var selectedIndex = document.getElementById("selPresidents").selectedIndex;
+	if (selectedIndex < 0) {
+		alert("Please select a President.");
+		return;
+	}
+	  
+	var strHTML = "<h1>President " + presArray[selectedIndex].Name ;
+	strHTML += "'s Height is " + presArray[selectedIndex].Height;
+	strHTML += " in. and his Weight is " + presArray[selectedIndex].Weight + " lbs.</h1>";
+	document.getElementById("target2").innerHTML = strHTML;	
+}
+</script>
+
+<form>
+<div class="row">
+	<div class="column">
+		<h3>Question 1</h3>
+		<label for="btnLoadData">Click on Load Data button to retrieve all data:</label></br>
+		<input id="btnLoadData" type="button" value="Load Data" onClick="loadData();"></br>
+		<div id="target1"></div>
+	</div>
+	<div class="column">
+		<h3>Question 2</h3>
+		<label for="selPresidents">Select a President and click on Get Info button:</label></br>
+
+		<select id="selPresidents" size="5" class="lstPresidents"></select></br>
+		<input type="button" value="Get Info" onClick="getInfo();"></br>
+		<div id="target2"></div>
+	</div>
+</div>
+</form>
+
+
+</body>
+</html>
